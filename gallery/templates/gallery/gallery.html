@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gallery Feed</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .feed {
+            width: 600px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 10px;
+            overflow-y: scroll;
+            max-height: 80vh;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        .post {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 20px 0;
+        }
+
+        .post img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .caption {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .timestamp {
+            margin-top: 5px;
+            font-size: 13px;
+            color: gray;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="feed">
+        <div class="header">
+            <h1>📸 Gallery Feed</h1>
+        </div>
+
+        {% for image in images %}
+            <div class="post">
+                {% if image.image %}
+                    <img src="{{ image.image.url }}" alt="Post Image">
+                {% endif %}
+                <div class="caption">{{ image.caption }}</div>
+                <div class="timestamp">
+                    Uploaded {{ image.uploaded_at|timesince }} ago
+                </div>
+            </div>
+        {% empty %}
+            <p>No posts yet.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
